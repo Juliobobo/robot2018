@@ -1,0 +1,87 @@
+-- mdl2lus - 2014 ver. 0.41 (SHA 79444ea)
+-- Wed Jan 17 16:49:52 2018
+const kp_teta : real;
+const pi : real;
+const ki_teta : real;
+node Comportement(Cg: real; Cd: real; Mode: bool) returns (v_d: real; v_g: real);
+var
+   w_000: real;
+   w_001: real;
+   w_002: real;
+   w_003: real;
+   w_004: real;
+   w_005: real;
+   w_006: real;
+   w_007: real;
+   w_008: real;
+   w_009: bool;
+   w_010: real;
+let
+   w_001 = Cg;
+   (w_007, w_004) = Correcteurs_n(w_000, w_003);
+   w_002 = Cd;
+   v_d = w_005;
+   w_010 = ((- 1.0) * w_008);
+   w_006 = (if w_009 then w_004 else w_010);
+   v_g = w_006;
+   w_005 = (if w_009 then w_007 else w_008);
+   w_009 = Mode;
+   w_008 = 0.4;
+   (w_000, w_003) = Ecarts(w_001, w_002);
+tel
+node Ecarts(Cg: real; Cd: real) returns (eps_teta: real; eps_delta: real);
+var
+   w_000: real;
+   w_001: real;
+   w_002: real;
+   w_003: real;
+   w_004: real;
+let
+   w_004 = (w_003 - w_002);
+   w_002 = Cg;
+   w_000 = (w_003 + w_002);
+   eps_teta = w_001;
+   w_003 = Cd;
+   eps_delta = w_000;
+   w_001 = ((pi / 200.0) * w_004);
+tel
+node Correcteurs_n(eps_teta: real; eps_delta: real) returns (v_d: real; v_g: real);
+var
+   w_000: real;
+   w_001: real;
+   w_002: real;
+   w_003: real;
+   w_004: real;
+   w_005: real;
+   w_006: real;
+   w_007: real;
+   w_008: real;
+   w_009: real;
+   w_010: real;
+   w_011: real;
+   w_012: real;
+   w_013: real;
+   w_014: real;
+   w_015: real;
+   w_016: real;
+let
+   w_005 = (0.5 * w_014);
+   w_004 = (0.5 * w_013);
+   w_007 = ((- w_009) + w_011);
+   w_014 = (w_006 + w_008);
+   w_006 = (w_016 + w_015);
+   w_002 = (0.002 * w_010);
+   w_010 = eps_teta;
+   w_015 = (kp_teta * w_010);
+   w_012 = (2.0 * w_006);
+   w_011 = (0.005 * w_003);
+   w_016 = (ki_teta * w_000);
+   v_d = w_005;
+   w_003 = eps_delta;
+   w_001 = (0.0 -> (pre w_000));
+   v_g = w_004;
+   w_009 = (if w_012<0.0 then -w_012 else w_012);
+   w_008 = (2.0 * w_007);
+   w_000 = (w_002 + w_001);
+   w_013 = ((- w_006) + w_008);
+tel

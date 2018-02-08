@@ -1,0 +1,1 @@
+#define minDistance 10
