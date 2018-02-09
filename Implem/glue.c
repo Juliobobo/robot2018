@@ -19,7 +19,7 @@ Periods are in ms (see periods.h)
 
 #include <stdbool.h>
 
-#define speedMax 40
+#define speedMax 45
 
 //Buffer pour le mode
 static bool bufferMode[2];
